@@ -28,13 +28,19 @@ public class UXCore {
         return instance;
     }
 
-    public Set<Class <? extends UXTool>> getTools(){
-        Reflections reflections = new Reflections("Core");
-        Set<Class<? extends UXTool>> classes = reflections.getSubTypesOf(UXTool.class);
-        return classes;
+    public static Set<Class <? extends UXTool>> getTools(){
+        try {
+            Reflections reflections = new Reflections("Core");
+            Set<Class<? extends UXTool>> classes = reflections.getSubTypesOf(UXTool.class);
+            return classes;
+        }catch (Exception e){
+            // Todo: handle
+            return null;
+        }
     }
 
-    static void activeTool(@NotNull UXTool uxTool) {
+
+    public static void activeTool(@NotNull UXTool uxTool) {
         try {
             uxTool.active();
         } catch (Exception e) {
@@ -42,7 +48,7 @@ public class UXCore {
         }
     }
 
-    static void activeTools(@NotNull UXTool... uxTools) {
+    public static void activeTools(@NotNull UXTool... uxTools) {
         try {
             for (UXTool uxTool : uxTools) {
                 uxTool.active();
